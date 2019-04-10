@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { requestMovies } from '../api/movieDb';
 
 class MovieList extends Component {
 	state = {
@@ -9,24 +9,11 @@ class MovieList extends Component {
 			minPopularity: 10
 	};
 
-	callMovieDb = pageNum => {
-		const baseApiUrl = 'https://api.themoviedb.org/3/discover/movie';
-
-		return axios.get(baseApiUrl, {
-			params: {
-				api_key: process.env.REACT_APP_MOVIEDB_API_KEY,
-				page: pageNum,
-				sort_by: 'popularity.desc',
-				primary_release_year: this.state.year
-			}
-		});
-	}
-
 	getPromises = totalPages => {
 		let promises = [];
 
 		for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-			promises.push(this.callMovieDb(pageNum));
+			promises.push(requestMovies(this.state.year, pageNum));
 		}
 
 		return promises;
@@ -49,7 +36,7 @@ class MovieList extends Component {
 			let isPopular = true;
 
 			while (isPopular) {
-				const page = await this.callMovieDb(pageNum);
+				const page = await requestMovies(this.state.year, pageNum);
 				const lowPopularity = page.data.results.filter(movie => movie.popularity < this.state.minPopularity);
 				pages.push(page.data.results);
 
