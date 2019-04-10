@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class MovieList extends Component {
 	state = {
@@ -7,56 +8,47 @@ class MovieList extends Component {
 			minPopularity: 10
 	};
 
-	getPromises = (year) => {
-		const baseUrl = 'https://api.themoviedb.org/3/discover/movie';
-		const queries = `?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&sort_by=popularity.desc&primary_release_year=${year}`;
+	callMovieDb = pageNum => {
+		const baseApiUrl = 'https://api.themoviedb.org/3/discover/movie';
+
+		return axios.get(baseApiUrl, {
+			params: {
+				api_key: process.env.REACT_APP_MOVIEDB_API_KEY,
+				page: pageNum,
+				sort_by: 'popularity.desc',
+				primary_release_year: this.state.year
+			}
+		});
+	}
+
+	getPromises = totalPages => {
 		let promises = [];
 
-		if (year === 2019) {
-			for (let pageNum = 1; pageNum <= 8; pageNum++) {
-				// console.log(baseUrl + queries + '&page=' + pageNum);
-				promises.push(fetch(baseUrl + queries + '&page=' + pageNum));
-			}
+		for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+			promises.push(this.callMovieDb(pageNum));
 		}
 
 		return promises;
 	}
 
+	getMovies = async () => {
+		// if the year is 2019, already know it will take 8 calls to the API to get all the data back
+		// this is done for page load speed so that the values of each page's promise do not have to be resolved
+		// to check the popularity >= 10 before moving on to the next page's promise
+		if (this.state.year === 2019) {
+			const pages = await Promise.all(this.getPromises(8));
+			return pages.map(page => page.data.results).flat();
+
+		// if the year is not 2019 (i.e., 2020+), we will have to resolve each page's promise to check that the
+		// popularity is still above 10. presentation of movies will be slower than if the year is 2019
+		} else {
+			return [];
+		}
+	}
+
 	componentDidMount = async () => {
-		const promises = await this.getPromises(this.state.year);
-		// const promises = this.getPromises(this.state.year);
-
-		// fetch(`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&primary_release_year=${this.state.year}&page=1&api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}`)
-		// // fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&page=1`)
-		// 	.then(res => res.json())
-		// 	.then(data => console.log(data));
-
-		console.log('BP 1', promises, typeof promises, typeof promises[0]);
-		Promise.all(promises)
-			.then(res => {
-				console.log(res.body);
-				return res.json();
-			}).then(values => {
-				console.log(values);
-			});
-			// .then((res) => {
-			// 	console.log('BP 2', res);
-			// 	return res.map(page => {
-			// 		console.log('BP 3', page, typeof page);
-			// 		return page.json();
-			// 	})
-			// }).then(pages => {
-			// 	console.log('BP 4', pages, typeof pages);
-			// 	return pages.forEach(page => {
-			// 		console.log('BP 5', page, typeof page)
-			// 		return page.then(p => console.log('BP 6', p, typeof p));
-			// })});
-
-	// 	promises.forEach(promise => {
-	// 		promise
-	// 			.then(res => res.json())
-	// 			.then(data => console.log(data));
-	// 	});
+		const movies = await this.getMovies();
+		console.log('movies', movies);
 	}
 
 	render() {
