@@ -5,7 +5,7 @@ class MovieList extends Component {
 	state = {
 			movies: [],
 			year: new Date().getFullYear(),
-			// year: 2018,
+			// year: 2018, // alternate year for testing
 			minPopularity: 10
 	};
 
@@ -66,12 +66,32 @@ class MovieList extends Component {
 	}
 
 	componentDidMount = async () => {
+		// this compare function is used to sort the movies by release date
+		const compare = (a, b) => {
+			let comparison = 0;
+			if (a.release_date > b.release_date) {
+				comparison = 1;
+			} else if (a.release_date < b.release_date) {
+				comparison = -1;
+			}
+			return comparison;
+		};
+
 		const movies = await this.getMovies();
-		console.log('movies', movies);
+		const sortedMovies = [...movies].sort(compare);
+		console.log('sorted movies', sortedMovies);
+
+		this.setState({ movies: sortedMovies });
 	}
 
 	render() {
-		return <p>This is a movie list!</p>;
+		return (
+			<ul>
+				{this.state.movies.map(({ id, title }) => (
+					<li key={id}><a href="#">{title}</a></li>
+				))}
+			</ul>
+		);
 	}
 }
 
