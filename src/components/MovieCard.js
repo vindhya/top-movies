@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Movie ({ detail }) {
+function MovieCard ({ detail }) {
 	if (detail.poster_path) {
 		return (
 			<div>
@@ -21,4 +21,4 @@ function Movie ({ detail }) {
 	
 }
 
-export default Movie;
+export default MovieCard;

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './App.css';
 import MovieList from './MovieList';
 import { requestMovies } from '../api/movieDb';
+import MovieDetail from './MovieDetail';
 
 class App extends Component {
   constructor(props) {
@@ -79,11 +81,14 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>TIFF {this.state.year}</h1>
-        <h2>Popular Movies Around  the World</h2>
-        <MovieList movies={this.state.movies} />
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <h1>TIFF {this.state.year}</h1>
+          <h2>Popular <Link to="/movie">Movies</Link> Around the World</h2>
+          <Route path="/" exact component={() => <MovieList movies={this.state.movies} />} />
+          <Route path="/movie" component={MovieDetail} />
+        </div>
+      </BrowserRouter>
     );
   }
 }
