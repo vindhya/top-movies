@@ -17,4 +17,14 @@ export const requestMovies = (year, pageNum) => {
 	});
 }
 
+export const requestMovieDetail = id => {
+	const apiPath = `/movie/${id}`;
+
+	return instance.get(apiPath, {
+		params: {
+			api_key: process.env.REACT_APP_MOVIEDB_API_KEY
+		}
+	});
+}
+
 export default instance;

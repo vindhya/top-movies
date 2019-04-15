@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import MovieList from './MovieList';
 import { requestMovies } from '../api/movieDb';
@@ -81,14 +81,15 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <div className="App">
-          <h1>TIFF {this.state.year}</h1>
-          <h2>Popular <Link to="/movie">Movies</Link> Around the World</h2>
-          <Route path="/" exact component={() => <MovieList movies={this.state.movies} />} />
-          <Route path="/movie" component={MovieDetail} />
-        </div>
-      </BrowserRouter>
+      <div className="App">
+      <h1>TIFF - {this.state.year} Movies</h1>
+        <BrowserRouter>
+          <div>
+            <Route exact path='/' component={() => <MovieList movies={this.state.movies} />} />
+						<Route path='/movie/:id' component={MovieDetail} />
+					</div>
+        </BrowserRouter>
+      </div>
     );
   }
 }
