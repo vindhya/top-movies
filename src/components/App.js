@@ -79,7 +79,7 @@ class App extends Component {
 	}
 
   render() {
-		if (this.isLoading) {
+		if (this.state.isLoading) {
 			return <div>Loading...</div>;
 		} else {
 			return (
