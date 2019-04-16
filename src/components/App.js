@@ -71,24 +71,29 @@ class App extends Component {
 
 		const movies = await this.getMovies();
 		const sortedMovies = [...movies].sort(compare);
-    console.log('sorted movies', sortedMovies);
-    console.log('a movie', sortedMovies[45]);
 
-		this.setState({ movies: sortedMovies });
+		this.setState({
+			movies: sortedMovies,
+			isLoading: false
+		});
 	}
 
   render() {
-    return (
-      <div className="App">
-      <h1>TIFF - {this.state.year} Movies</h1>
-        <BrowserRouter>
-          <div>
-            <Route exact path='/' component={() => <MovieList movies={this.state.movies} />} />
-						<Route path='/movie/:id' component={MovieDetail} />
-					</div>
-        </BrowserRouter>
-      </div>
-    );
+		if (this.isLoading) {
+			return <div>Loading...</div>;
+		} else {
+			return (
+				<div className="App">
+				<h1>TIFF - {this.state.year} Movies</h1>
+					<BrowserRouter>
+						<div>
+							<Route exact path='/' component={() => <MovieList movies={this.state.movies} />} />
+							<Route path='/movie/:id' component={MovieDetail} />
+						</div>
+					</BrowserRouter>
+				</div>
+			);
+		}
   }
 }
 

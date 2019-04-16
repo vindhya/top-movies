@@ -17,12 +17,10 @@ class MovieDetail extends Component {
 			movieDetail: movieDetail.data,
 			isLoading: false
 		});
-		console.log('this.state.movieDetail', this.state.movieDetail);
 	}
 
 	render() {
 		const { title, poster_path, tagline, overview, genres } = this.state.movieDetail;
-		console.log('genres', genres);
 
 		if (this.state.isLoading) {
 			return <p>Loading...</p>;
