@@ -47,16 +47,16 @@ class PersonDetail extends Component {
 						</div>
 						<div className='col-lg-8'>
 							<p>{biography}</p>
+							Movie Credits:
+							<ul>
+								{movieCredits.map(movie => (
+									<li key={movie.id}>
+										<Link to={`/movie/${movie.id}`}>{movie.original_title}</Link>
+									</li>
+								))}
+							</ul>
 						</div>
 					</div>
-					Movie Credits:
-					<ul>
-						{movieCredits.map(movie => (
-							<li key={movie.id}>
-								<Link to={`/movie/${movie.id}`}>{movie.original_title}</Link>
-							</li>
-						))}
-					</ul>
 				</div>
 			);
 		}
