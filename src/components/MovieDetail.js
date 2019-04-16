@@ -29,19 +29,29 @@ class MovieDetail extends Component {
 			return (
 				<div>
 					<h2>{title}</h2>
-					<img
-							alt={`Movie poster for ${title}`}
-							src={`https://image.tmdb.org/t/p/w342${poster_path}`}
-					/>
-					<h3>{tagline}</h3>
-					<p>{overview}</p>
-					<span>Genres:</span>
-					<ul>
-						{genres.map(genre => (
-							<li key={genre.id}>{genre.name}</li>
-						))}
-					</ul>
-					<CastList movieId={this.state.id} />
+
+					<div className='row'>
+						<div className='col-lg-4'>
+							<img
+								className='img-fluid'
+								alt={`Movie poster for ${title}`}
+								src={`https://image.tmdb.org/t/p/w342${poster_path}`}
+							/>
+						</div>
+
+						<div className='col-lg-8'>
+							<h3>{tagline}</h3>
+							<p>{overview}</p>
+							<span>Genres:</span>
+							<ul>
+								{genres.map(genre => (
+									<li key={genre.id}>{genre.name}</li>
+								))}
+							</ul>
+							<CastList movieId={this.state.id} />
+						</div>
+					</div>
+
 				</div>
 			);
 		}

@@ -35,10 +35,20 @@ class PersonDetail extends Component {
 			return (
 				<div>
 					<h2>{name}</h2>
-					{profile_path
-						? <img alt={`${name} profile`} src={`https://image.tmdb.org/t/p/w185${profile_path}`} />
-						: <span>No profile image</span>}
-					<p>{biography}</p>
+					<div className='row'>
+						<div className='col-lg-4'>
+							{profile_path
+								? <img
+										className='img-fluid'
+										alt={`${name} profile`}
+										src={`https://image.tmdb.org/t/p/h632${profile_path}`}
+									/>
+								: <span>No profile image</span>}
+						</div>
+						<div className='col-lg-8'>
+							<p>{biography}</p>
+						</div>
+					</div>
 					Movie Credits:
 					<ul>
 						{movieCredits.map(movie => (

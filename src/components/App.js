@@ -81,10 +81,10 @@ class App extends Component {
 
   render() {
 		if (this.state.isLoading) {
-			return <div>Loading...</div>;
+			return <div className='container'>Loading...</div>;
 		} else {
 			return (
-				<div className="App">
+				<div className='App container'>
 				<h1>TIFF Movies</h1>
 					<BrowserRouter>
 						<div>
