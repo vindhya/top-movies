@@ -21,7 +21,7 @@ class MovieDetail extends Component {
 	}
 
 	render() {
-		const { title, poster_path, tagline, overview, genres } = this.state.movieDetail;
+		const { title, poster_path, tagline, overview, genres, release_date } = this.state.movieDetail;
 
 		if (this.state.isLoading) {
 			return <p>Loading...</p>;
@@ -42,6 +42,7 @@ class MovieDetail extends Component {
 						<div className='col-lg-8'>
 							<h3>{tagline}</h3>
 							<p>{overview}</p>
+							<p>Release Date: {release_date}</p>
 							<span>Genres:</span>
 							<ul>
 								{genres.map(genre => (
