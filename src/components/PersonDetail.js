@@ -31,9 +31,6 @@ class PersonDetail extends Component {
 		} else {
 			const { name, profile_path, biography } = this.state.person;
 			const movieCredits = this.state.movieCredits;
-			
-			console.log('person', this.state.person);
-			console.log('movie credits', this.state.movieCredits);
 
 			return (
 				<div>

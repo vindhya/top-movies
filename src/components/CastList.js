@@ -14,7 +14,7 @@ class CastList extends Component {
 
 	componentDidMount = async () => {
 		const castList = await requestCastList(this.state.movieId);
-		console.log('castList', castList.data.cast);
+		
 		this.setState({
 			cast: castList.data.cast,
 			isLoading: false
