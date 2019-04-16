@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { requestMovieDetail } from '../api/movieDb';
+import CastList from './CastList';
 
 class MovieDetail extends Component {
 	constructor(props) {
@@ -40,6 +41,7 @@ class MovieDetail extends Component {
 							<li key={genre.id}>{genre.name}</li>
 						))}
 					</ul>
+					<CastList movieId={this.state.id} />
 				</div>
 			);
 		}

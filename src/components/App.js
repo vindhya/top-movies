@@ -4,6 +4,7 @@ import './App.css';
 import MovieList from './MovieList';
 import { requestMovies } from '../api/movieDb';
 import MovieDetail from './MovieDetail';
+import PersonDetail from './PersonDetail';
 
 class App extends Component {
 	state = {
@@ -84,11 +85,12 @@ class App extends Component {
 		} else {
 			return (
 				<div className="App">
-				<h1>TIFF - {this.state.year} Movies</h1>
+				<h1>TIFF Movies</h1>
 					<BrowserRouter>
 						<div>
-							<Route exact path='/' component={() => <MovieList movies={this.state.movies} />} />
+							<Route exact path='/' component={() => <MovieList movies={this.state.movies} year={this.state.year} />} />
 							<Route path='/movie/:id' component={MovieDetail} />
+							<Route path='/person/:id' component={PersonDetail} />
 						</div>
 					</BrowserRouter>
 				</div>
