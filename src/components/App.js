@@ -6,15 +6,13 @@ import { requestMovies } from '../api/movieDb';
 import MovieDetail from './MovieDetail';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movies: [],
-			year: new Date().getFullYear(),
-			// year: 2018, // alternate year for testing
-			minPopularity: 10
-    };
-  }
+	state = {
+		movies: [],
+		year: new Date().getFullYear(),
+		// year: 2018, // alternate year for testing
+		minPopularity: 10,
+		isLoading: true
+	};
 
   getPromises = totalPages => {
 		let promises = [];
