@@ -17,7 +17,7 @@ function MovieCard ({ detail }) {
 		console.log('no image', detail);
 		return (
 			<div>
-				<h3>{detail.title}</h3>
+				<Link to={`/movie/${detail.id}`}><h3>{detail.title}</h3></Link>
 			</div>
 		);
 	}
